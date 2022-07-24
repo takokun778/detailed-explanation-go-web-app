@@ -24,6 +24,10 @@ func main() {
 		log.Fatalf("failed to listen port %s: %v", p, err)
 	}
 
+	log.Println("server start...")
+
+	log.Printf("listen port %s", p)
+
 	if err := run(context.Background(), l); err != nil {
 		fmt.Printf("failed to terminate server: %v", err)
 		os.Exit(1)
