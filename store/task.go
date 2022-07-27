@@ -5,7 +5,7 @@ import (
 	"todo/entity"
 )
 
-func (r *Repository) ListTacks(
+func (r *Repository) ListTasks(
 	ctx context.Context, db Queryer,
 ) (entity.Tasks, error) {
 	tasks := entity.Tasks{}
@@ -17,7 +17,7 @@ func (r *Repository) ListTacks(
 			status, 
 			created, 
 			modified
-		FROM tasks;
+		FROM task;
 		`
 
 	if err := db.SelectContext(ctx, &tasks, sql); err != nil {
