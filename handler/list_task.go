@@ -4,10 +4,15 @@ import (
 	"net/http"
 	"todo/entity"
 	"todo/store"
+
+	"github.com/jmoiron/sqlx"
 )
 
 type ListTask struct {
-	Store *store.TaskStore
+	Store   *store.TaskStore
+	DB      *sqlx.DB
+	Repo    store.Repository
+	Service ListTasksService
 }
 
 type task struct {
@@ -19,7 +24,13 @@ type task struct {
 func (lt *ListTask) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
-	tasks := lt.Store.All()
+	tasks, err := lt.Service.ListTasks(ctx)
+	if err != nil {
+		RespondJSON(ctx, w, &ErrResponse{
+			Message: err.Error(),
+		}, http.StatusInternalServerError)
+		return
+	}
 
 	rsp := []task{}
 

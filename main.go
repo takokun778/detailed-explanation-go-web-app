@@ -47,7 +47,12 @@ func run(ctx context.Context) error {
 
 	log.Printf("start with %v", url)
 
-	mux := NewMux()
+	mux, cleanup, err := NewMux(ctx, cfg)
+	if err != nil {
+		return err
+	}
+
+	defer cleanup()
 
 	s := NewServer(l, mux)
 

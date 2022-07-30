@@ -2,6 +2,8 @@ package handler
 
 import (
 	"bytes"
+	"context"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -53,6 +55,19 @@ func TestAddTask(t *testing.T) {
 				"/tasks",
 				bytes.NewReader(testutil.LoadFile(t, tt.reqFile)),
 			)
+
+			moq := &AddTaskServiceMock{}
+			moq.AddTaskFunc = func(
+				ctx context.Context,
+				title string,
+			) (*entity.Task, error) {
+				if tt.want.status == http.StatusOK {
+					return &entity.Task{
+						ID: 1,
+					}, nil
+				}
+				return nil, errors.New("error from mock")
+			}
 
 			sut := AddTask{
 				Store: &store.TaskStore{
