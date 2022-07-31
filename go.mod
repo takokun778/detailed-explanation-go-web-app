@@ -11,6 +11,7 @@ require (
 	github.com/google/go-cmp v0.5.8
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/matryer/moq v0.2.7
+	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
 	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
 )
 

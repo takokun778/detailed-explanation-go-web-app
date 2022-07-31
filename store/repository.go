@@ -3,6 +3,7 @@ package store
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"todo/clock"
 
 	"github.com/jmoiron/sqlx"
@@ -40,3 +41,11 @@ var (
 type Repository struct {
 	Clocker clock.Clocker
 }
+
+const (
+	ErrCodeMySQLDuplicateEntry = 1062
+)
+
+var (
+	ErrAlreadyEntry = errors.New("duplicate entry")
+)

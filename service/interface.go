@@ -14,3 +14,7 @@ type TaskAdder interface {
 type TaskLister interface {
 	ListTasks(context.Context, store.Queryer) (entity.Tasks, error)
 }
+
+type UserRegister interface {
+	RegisterUser(context.Context, store.Execer, *entity.User) error
+}
